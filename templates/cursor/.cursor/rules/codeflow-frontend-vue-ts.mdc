@@ -1,0 +1,18 @@
+---
+description: CodeFlow Vue + TypeScript frontend engineering rules
+globs:
+  - "**/*.vue"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "package.json"
+  - "vite.config.*"
+  - "nuxt.config.*"
+  - "tailwind.config.*"
+alwaysApply: false
+---
+
+# CodeFlow Frontend Vue + TypeScript
+
+涉及 Vue / TypeScript / Vite / Nuxt / Web UI 时使用本规则。
+
+要求：组件边界清晰、类型完整、loading/empty/error 完整、无 card 套 card、状态色统一、API contract 清晰、基础响应式可用。

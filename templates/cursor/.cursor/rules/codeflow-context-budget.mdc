@@ -1,0 +1,8 @@
+---
+description: CodeFlow context budget and skill routing rules
+alwaysApply: false
+---
+
+# CodeFlow Context Budget
+
+当前任务只加载相关 skill。简单需求禁止加载过多 workflow skill。长任务必须 handoff。多代理默认不超过最小必要数量。

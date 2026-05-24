@@ -1,0 +1,14 @@
+---
+description: CodeFlow Go backend engineering rules
+globs:
+  - "**/*.go"
+  - "go.mod"
+  - "go.sum"
+alwaysApply: false
+---
+
+# CodeFlow Backend Go
+
+涉及 Go / go.mod / API / service / repository / worker / cron / DB 时使用本规则。
+
+要求：context 贯穿 IO、错误 wrap、结构化日志、小接口、handler/service/repository 分层、table-driven tests、无 goroutine 泄漏。

@@ -2,7 +2,7 @@
 
 CodeFlow 是一套面向 AI Coding 工具的 OpenSpec + Superpowers 标准开发工作流包。
 
-当前版本：`CodeFlow 1.1 Collaborative Agents Workflow Pack`
+当前版本：`CodeFlow 1.2 Skill System Workflow Pack`
 
 支持：
 
@@ -138,10 +138,15 @@ Graphify 只作为项目理解线索，最终必须以真实代码、OpenSpec sp
 
 ## Collaborative Agents
 
-CodeFlow 1.1 新增跨工具 Collaborative Agents 能力：
+CodeFlow 1.2 继续包含跨工具 Collaborative Agents 能力：
 
 - Claude Code：Agent Teams
 - Codex：Subagent Workflows
 - Cursor：Parallel Agents / Rules
 
 详见 `docs/collaborative-agents.md`。
+
+
+## Skill System
+
+CodeFlow 1.2 新增 Engineering Skills 与 Skill System：Vue + TypeScript、Go、Context Budget、Quality Gates、Skill Learning、Eval Checkpoints、Auto Skill Routing。详见 `docs/skill-system.md`。

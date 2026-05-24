@@ -3,7 +3,7 @@
 import argparse, json, shutil
 from pathlib import Path
 from datetime import datetime
-VERSION='1.0.2'; CF_START='<!-- CodeFlow start -->'; CF_END='<!-- CodeFlow end -->'
+VERSION='1.2.0'; CF_START='<!-- CodeFlow start -->'; CF_END='<!-- CodeFlow end -->'
 def now(): return datetime.utcnow().replace(microsecond=0).isoformat()+'Z'
 def backup(p,dry=False):
     if not p.exists() or dry: return None
