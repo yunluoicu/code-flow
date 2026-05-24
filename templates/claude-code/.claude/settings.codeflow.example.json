@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/session-start.sh"
+            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/codeflow_hooks.py"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/user-prompt-submit.sh"
+            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/codeflow_hooks.py"
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/pre-tool-use.sh"
+            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/codeflow_hooks.py"
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/subagent-stop.sh"
+            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/codeflow_hooks.py"
           }
         ]
       }
@@ -50,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/stop.sh"
+            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/codeflow/hooks/codeflow_hooks.py"
           }
         ]
       }

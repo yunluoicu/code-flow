@@ -1,0 +1,8 @@
+---
+description: CodeFlow Git 安全规则
+alwaysApply: true
+---
+
+# codeflow-git
+
+未经用户明确确认，禁止执行任何 Git 写操作。

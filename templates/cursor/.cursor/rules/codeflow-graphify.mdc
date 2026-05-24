@@ -1,0 +1,8 @@
+---
+description: Graphify 可选增强
+alwaysApply: false
+---
+
+# codeflow-graphify
+
+无 graphify-out 时提醒 /graphify .；可能过期时提醒 /graphify . --update；不自动执行。

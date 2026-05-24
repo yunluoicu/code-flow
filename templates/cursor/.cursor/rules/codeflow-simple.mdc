@@ -1,0 +1,8 @@
+---
+description: CodeFlow 简单需求流程
+alwaysApply: false
+---
+
+# codeflow-simple
+
+简单需求：brainstorming → discovery → writing-plans → TDD → Review。

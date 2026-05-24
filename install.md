@@ -1,85 +1,67 @@
-# CodeFlow Claude Code 安装说明
+# CodeFlow 1.0.2 安装说明
 
-## 目标
+## 支持工具
 
-将 CodeFlow 工作流安装到当前项目，支持 Claude Code。
+- Claude Code
+- Codex
+- Cursor
 
-安装后：
-
-- 不覆盖项目根 `CLAUDE.md`
-- 不破坏原有 `.claude/settings.json`
-- 在 `.claude/codeflow/` 下安装流程规则、hooks、状态文件
-- 支持简单需求和复杂需求两套工作流
-- 始终使用简体中文回复
-- 所有 Git 写操作必须用户确认
-
-## 安装前检查
-
-请先检查当前项目：
-
-1. 是否存在 `CLAUDE.md`
-2. 是否存在 `.claude/`
-3. 是否存在 `.claude/settings.json`
-4. 是否存在 `openspec/`
-5. 是否已安装 OpenSpec / OPSX
-6. 是否已安装 Superpowers
-
-要求：缺少 `openspec/` 或 Superpowers 时只提示用户，不要自动初始化或安装；不要修改业务代码；不要创建 OpenSpec change。
-
-## 推荐安装方式
+## 推荐命令
 
 ```bash
-python3 scripts/install_claude_code.py --target /path/to/target-project
+python3 scripts/install_all.py --target . --tools claude,codex,cursor --dry-run
+python3 scripts/install_all.py --target . --tools claude
+python3 scripts/install_all.py --target . --tools codex
+python3 scripts/install_all.py --target . --tools cursor
+python3 scripts/install_all.py --target . --tools claude,codex,cursor
+python3 scripts/install_all.py --target . --tools claude,codex,cursor --upgrade
+python3 scripts/install_all.py --target . --tools claude,codex,cursor --force
 ```
 
-如果已在目标项目根目录执行：
-
-```bash
-python3 /path/to/code-flow/scripts/install_claude_code.py --target .
-```
-
-## 手动安装步骤
-
-1. 创建目录：
-
-```bash
-mkdir -p .claude/codeflow/workflows .claude/codeflow/hooks .claude/codeflow/state
-```
-
-2. 复制模板：
+## AI 代装提示词
 
 ```text
-templates/claude-code/.claude/codeflow/ → .claude/codeflow/
+请从以下仓库安装 CodeFlow 到当前项目：
+
+https://github.com/yunluoicu/code-flow
+
+请先阅读安装说明：
+
+https://raw.githubusercontent.com/yunluoicu/code-flow/main/install.md
+
+我要安装的工具：Claude Code / Codex / Cursor
+
+安装前请先输出：准备执行的步骤、会创建哪些文件、会修改哪些文件、风险点。
+等我确认后再执行安装。
 ```
 
-3. 更新项目根 `CLAUDE.md`：
+## 安装内容
 
-```md
-<!-- CodeFlow start -->
-@.claude/codeflow/CLAUDE.md
-<!-- CodeFlow end -->
-```
+通用 Core：`.codeflow/manifest.json`、`.codeflow/state.md`、`.codeflow/active-change.md`、`.codeflow/workflows/`。
 
-要求：不覆盖原有 `CLAUDE.md`；已存在 CodeFlow 引用时不要重复添加。
+Claude Code：`.claude/codeflow/`、`.claude/rules/`、`.claude/commands/`、`.claude/agents/`、`.claude/skills/`、`.claude/settings.json`、`CLAUDE.md` 引用。
 
-4. 合并 `.claude/settings.json`：只合并 CodeFlow hooks，不删除用户已有配置。参考 `templates/claude-code/.claude/settings.codeflow.example.json`。
+Codex：`AGENTS.md`、`.agents/skills/`。
 
-5. 初始化状态文件：若已存在则备份，不直接覆盖。
+Cursor：`.cursor/rules/*.mdc`、可选 `AGENTS.md` 摘要。
 
-6. 设置 hook 执行权限：
+## Graphify
 
-```bash
-chmod +x .claude/codeflow/hooks/*.sh
-```
-
-## 幂等安装要求
-
-- 已存在 CodeFlow 引用，不重复添加
-- 已存在 CodeFlow hooks，不重复添加
-- 已存在状态文件，不直接覆盖
-- 已存在 `.claude/codeflow/CLAUDE.md`，如内容不同必须先备份
-- 不覆盖用户已有 `.claude/settings.json`
+CodeFlow 不自动安装 Graphify。如果没有 `graphify-out/graph.json`，会提醒 `/graphify .`；如果可能过期，会提醒 `/graphify . --update`。
 
 ## 禁止事项
 
-安装过程中禁止覆盖项目根 `CLAUDE.md`、删除已有 `.claude/settings.json`、修改业务代码、自动安装 OpenSpec、自动安装 Superpowers、创建 `openspec/changes/<change-id>`、执行 Git 写操作。
+安装过程禁止修改业务代码、自动安装 OpenSpec/Superpowers/Graphify、自动执行 Graphify、自动执行任何 Git 写操作。
+
+
+## Collaborative Agents 安装说明
+
+默认安装规则、skills、prompts 和 Claude commands，但不默认启用 Claude Agent Teams 实验能力。
+
+Claude Code 如需启用 Agent Teams，请确认 Claude Code 版本和环境变量：
+
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+```
+
+CodeFlow 不生成项目级 `.claude/teams/`，不管理 Agent Teams runtime。

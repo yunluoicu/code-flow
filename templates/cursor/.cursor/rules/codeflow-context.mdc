@@ -1,0 +1,8 @@
+---
+description: CodeFlow 上下文规则
+alwaysApply: true
+---
+
+# codeflow-context
+
+统一读取 .codeflow/state.md 和 .codeflow/active-change.md。

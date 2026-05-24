@@ -1,0 +1,8 @@
+---
+description: CodeFlow 核心规则
+alwaysApply: true
+---
+
+# codeflow-core
+
+始终使用简体中文回复。新需求先判断简单/复杂。有代码逻辑改动默认 TDD 和 Review。所有 Git 写操作必须用户确认。

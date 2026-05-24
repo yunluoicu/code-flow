@@ -1,0 +1,8 @@
+---
+description: OpenSpec 规则
+alwaysApply: false
+---
+
+# codeflow-openspec
+
+复杂需求必须创建 OpenSpec change。

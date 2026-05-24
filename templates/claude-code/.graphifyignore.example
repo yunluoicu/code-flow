@@ -1,0 +1,9 @@
+.git/
+node_modules/
+dist/
+build/
+coverage/
+.env
+*.pem
+*.key
+graphify-out/

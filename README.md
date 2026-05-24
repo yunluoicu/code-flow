@@ -1,94 +1,147 @@
 # CodeFlow
 
-CodeFlow 是一套面向 **Claude Code** 的 OpenSpec + Superpowers 工作流安装包。
+CodeFlow 是一套面向 AI Coding 工具的 OpenSpec + Superpowers 标准开发工作流包。
 
-它不替代 OpenSpec，也不替代 Superpowers，而是把两者组织成一套稳定的项目级 AI 开发流程。
+当前版本：`CodeFlow 1.1 Collaborative Agents Workflow Pack`
 
-## 特性
+支持：
 
-- 不污染项目根 `CLAUDE.md`
-- 安装到 `.claude/codeflow/`
-- 支持 Claude Code hooks
-- 支持简单需求 / 复杂需求两套流程
-- 支持 OpenSpec change 生命周期
-- 支持 Superpowers 官方执行链路
-- 支持状态文件，避免上下文丢失
-- 始终使用简体中文回复
-- 所有 Git 写操作必须用户确认
+- Claude Code
+- Codex
+- Cursor
 
-## 第一版范围
+## 设计目标
 
-当前只支持 Claude Code。
+CodeFlow 不替代 OpenSpec，也不替代 Superpowers。它负责把以下能力组织成稳定可执行的项目级 AI 工作流：
 
-暂不支持：Codex、Cursor、MCP Server、Dashboard、数据库状态管理。
+```text
+需求澄清 → 已有能力发现 → OpenSpec change → 计划拆解 → 执行 → TDD → Review → 验证 → 收尾 → 归档
+```
 
-## 安装
+## 多工具能力对照
 
-推荐把 `install.md` 发给 Claude Code，让它按文档安装。
+| 能力 | Claude Code | Codex | Cursor |
+|---|---|---|---|
+| 核心规则 | `.claude/rules/` | `AGENTS.md` | `.cursor/rules/*.mdc` |
+| 命令入口 | `.claude/commands/` | 自然语言触发 | Agent Chat 触发 |
+| Agents | `.claude/agents/` | 不安装 | 不安装 |
+| Skills | `.claude/skills/` | `.agents/skills/` | 转为 rules / workflows |
+| Hooks | `.claude/settings.json` | 不支持 | 不支持 |
+| 状态文件 | `.codeflow/` | `.codeflow/` | `.codeflow/` |
+| Graphify | 可选 | 可选 | 可选 |
 
-也可以使用脚本：
+## 安装方式：手动安装 / AI 代装
+
+### 手动安装
 
 ```bash
-python3 scripts/install_claude_code.py --target /path/to/target-project
+git clone https://github.com/yunluoicu/code-flow /tmp/code-flow
+cd /path/to/your-project
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude
 ```
 
-## 安装后的项目结构
+安装 Codex：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools codex
+```
+
+安装 Cursor：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools cursor
+```
+
+三端都安装：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor
+```
+
+预览安装，不实际写入：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --dry-run
+```
+
+升级：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --upgrade
+```
+
+强制覆盖 CodeFlow 管理文件：
+
+```bash
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --force
+```
+
+### AI 代装
+
+打开目标项目的 Claude Code / Codex / Cursor，然后发送：
 
 ```text
-目标项目/
-├── CLAUDE.md
-└── .claude/
-    ├── settings.json
-    └── codeflow/
-        ├── CLAUDE.md
-        ├── workflows/
-        ├── hooks/
-        └── state/
+请安装 CodeFlow 到当前项目。
+
+仓库：
+https://github.com/yunluoicu/code-flow
+
+安装说明：
+https://raw.githubusercontent.com/yunluoicu/code-flow/main/install.md
+
+我要安装的工具：
+Claude Code / Codex / Cursor
+
+请先阅读安装说明，然后列出：
+1. 准备执行的步骤
+2. 会创建哪些文件
+3. 会修改哪些文件
+4. 是否会修改 CLAUDE.md / AGENTS.md / .claude/settings.json / .cursor/rules
+5. 是否会执行 git / python / chmod 等命令
+6. 风险点
+
+等我确认后再执行安装。
 ```
 
-项目根 `CLAUDE.md` 只追加：
+一句话：手动安装是你开车；AI 代装是 AI 开车，你坐副驾踩刹车。
 
-```md
-<!-- CodeFlow start -->
-@.claude/codeflow/CLAUDE.md
-<!-- CodeFlow end -->
-```
+## 使用方式
 
-## 核心流程
+Claude Code：使用 `/codeflow-new`、`/codeflow-status`、`/codeflow-review` 等命令。
 
-### 简单需求
+Codex：直接说 `按 CodeFlow 开始新需求：<需求内容>`。
+
+Cursor：在 Agent Chat 里说 `按 CodeFlow 开始新需求：<需求内容>`。
+
+## Graphify 可选增强
+
+CodeFlow 不自动安装 Graphify，也不自动执行 `/graphify .` 或 `/graphify . --update`。
+
+如果没有 `graphify-out/graph.json`，会提醒用户可执行：
 
 ```text
-brainstorming 轻量确认
-→ Existing Capability Discovery 轻量检查
-→ writing-plans 轻量计划
-→ 询问用户选择 executing-plans / subagent-driven-development
-→ 按用户选择执行
-→ test-driven-development 默认必须执行
-→ /review 默认必须执行
-→ 询问是否 requesting-code-review
-→ 询问是否 verification-before-completion
-→ 询问是否 finishing-a-development-branch
+/graphify .
 ```
 
-### 复杂需求
+如果图谱可能落后，会提醒用户可执行：
 
 ```text
-brainstorming
-→ Existing Capability Discovery
-→ /opsx:propose <change-id>
-→ Spec Review
-→ writing-plans
-→ 询问用户选择 executing-plans / subagent-driven-development
-→ 按用户选择执行
-→ test-driven-development 默认必须执行
-→ /review 默认必须执行
-→ 询问是否 requesting-code-review
-→ 询问是否 verification-before-completion
-→ 询问是否 finishing-a-development-branch
-→ 用户确认后 /opsx:archive <change-id>
+/graphify . --update
 ```
 
-## Git 操作规则
+Graphify 只作为项目理解线索，最终必须以真实代码、OpenSpec specs 和测试文件为准。
 
-未经用户明确确认，禁止执行任何会改变 Git 状态的命令，包括但不限于 `git add`、`git commit`、`git push`、`git merge`、`git rebase`、`git reset`、`git clean`、`git restore`、`git checkout`、`git switch`、`git stash`、`git tag`。
+## Git 安全规则
+
+所有 Git 写操作必须用户确认，包括但不限于：`git add`、`git commit`、`git push`、`git merge`、`git rebase`、`git reset`、`git clean`、`git restore`、`git checkout`、`git switch`、`git stash`、`git tag`。
+
+
+## Collaborative Agents
+
+CodeFlow 1.1 新增跨工具 Collaborative Agents 能力：
+
+- Claude Code：Agent Teams
+- Codex：Subagent Workflows
+- Cursor：Parallel Agents / Rules
+
+详见 `docs/collaborative-agents.md`。

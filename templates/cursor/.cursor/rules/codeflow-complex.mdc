@@ -1,0 +1,8 @@
+---
+description: CodeFlow 复杂需求流程
+alwaysApply: false
+---
+
+# codeflow-complex
+
+复杂需求：brainstorming → discovery → OpenSpec → writing-plans → TDD → Review → archive。
