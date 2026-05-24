@@ -1,94 +1,233 @@
-# CodeFlow
+# CodeFlow 2.1
 
-CodeFlow 是一套面向 **Claude Code** 的 OpenSpec + Superpowers 工作流安装包。
+CodeFlow 2.1 是一个面向 AI Coding 的本地项目工作台：Go CLI + 多 AI Adapter + 项目画像 + 项目索引 + OpenSpec/Superpowers 导入 + SQLite/FTS5 + Web Dashboard。
 
-它不替代 OpenSpec，也不替代 Superpowers，而是把两者组织成一套稳定的项目级 AI 开发流程。
+## 定位
 
-## 特性
+```text
+CodeFlow 1.x = Workflow Pack
+CodeFlow 2.1 = AI Development Workspace
+```
 
-- 不污染项目根 `CLAUDE.md`
-- 安装到 `.claude/codeflow/`
-- 支持 Claude Code hooks
-- 支持简单需求 / 复杂需求两套流程
-- 支持 OpenSpec change 生命周期
-- 支持 Superpowers 官方执行链路
-- 支持状态文件，避免上下文丢失
-- 始终使用简体中文回复
-- 所有 Git 写操作必须用户确认
+2.0 不是 MVP，包含完整可用能力：
 
-## 第一版范围
-
-当前只支持 Claude Code。
-
-暂不支持：Codex、Cursor、MCP Server、Dashboard、数据库状态管理。
+- Go CLI：`codeflow`
+- Claude Code / Codex / Cursor adapter 安装
+- `.codeflow/` 项目工作区
+- 项目画像 `project.yaml / project.md`
+- 模块索引 `modules.yaml / index.json`
+- OpenSpec 导入
+- Superpowers 过程文档导入
+- 需求管理
+- 迭代管理
+- Review / Check Gate
+- Graphify 状态检查
+- SQLite + FTS5 全文搜索
+- Web Dashboard，默认端口 `4399`
 
 ## 安装
 
-推荐把 `install.md` 发给 Claude Code，让它按文档安装。
-
-也可以使用脚本：
+### go install
 
 ```bash
-python3 scripts/install_claude_code.py --target /path/to/target-project
+go install github.com/yunluoicu/code-flow/cmd/codeflow@latest
 ```
 
-## 安装后的项目结构
+### 源码编译
+
+```bash
+git clone https://github.com/yunluoicu/code-flow
+cd code-flow
+go build -o codeflow ./cmd/codeflow
+./codeflow version
+```
+
+## 快速开始
+
+```bash
+# 初始化当前项目，安装三端 adapter，并生成项目画像和索引
+codeflow init --tools claude,codex,cursor
+
+# 查看状态
+codeflow status
+
+# 重新生成项目画像
+codeflow profile
+
+# 重新生成模块索引
+codeflow index
+
+# 同步 OpenSpec / Superpowers / docs / code 到 SQLite
+codeflow sync
+
+# 启动 Web Dashboard
+codeflow web --port 4399
+```
+
+## 常用命令
+
+```bash
+codeflow version
+
+codeflow init
+codeflow init --tools claude,codex,cursor
+codeflow init --dry-run
+codeflow init --force
+
+codeflow doctor
+codeflow status
+codeflow upgrade
+codeflow uninstall --force
+
+codeflow profile
+codeflow index
+codeflow sync
+
+codeflow requirement new --title "需求标题"
+codeflow requirement list
+codeflow requirement show <id>
+
+codeflow iteration new --name "迭代名称"
+codeflow iteration list
+codeflow iteration show <id>
+
+codeflow changes list
+codeflow changes show <change-id>
+codeflow changes check <change-id>
+
+codeflow check
+codeflow review
+
+codeflow graph status
+codeflow graph suggest
+
+codeflow web
+codeflow web --port 4399
+codeflow web --workspace ~/projects
+```
+
+## Web Dashboard
+
+默认：
+
+```bash
+codeflow web
+```
+
+访问：
 
 ```text
-目标项目/
-├── CLAUDE.md
-└── .claude/
-    ├── settings.json
-    └── codeflow/
-        ├── CLAUDE.md
-        ├── workflows/
-        ├── hooks/
-        └── state/
+http://127.0.0.1:4399
 ```
 
-项目根 `CLAUDE.md` 只追加：
+支持：
 
-```md
-<!-- CodeFlow start -->
-@.claude/codeflow/CLAUDE.md
-<!-- CodeFlow end -->
-```
+- 项目列表
+- 项目详情
+- 项目画像
+- 模块列表
+- 需求列表和详情
+- 迭代列表和详情
+- OpenSpec Specs / Changes
+- Superpowers 过程记录
+- Review 结果
+- Check 风险
+- Graphify 状态
+- 全文搜索
 
-## 核心流程
+## 安全边界
 
-### 简单需求
+CodeFlow 不会自动执行：
+
+- `git add`
+- `git commit`
+- `git push`
+- `git merge`
+- `git rebase`
+- `git reset`
+- `git clean`
+- `/graphify .`
+- `/graphify . --update`
+
+Graphify 只做状态检查和建议，不自动运行。
+
+## 目录
 
 ```text
-brainstorming 轻量确认
-→ Existing Capability Discovery 轻量检查
-→ writing-plans 轻量计划
-→ 询问用户选择 executing-plans / subagent-driven-development
-→ 按用户选择执行
-→ test-driven-development 默认必须执行
-→ /review 默认必须执行
-→ 询问是否 requesting-code-review
-→ 询问是否 verification-before-completion
-→ 询问是否 finishing-a-development-branch
+.codeflow/
+├── manifest.json
+├── config.yaml
+├── project.yaml
+├── project.md
+├── modules.yaml
+├── index.json
+├── state.md
+├── active-change.md
+├── requirements/
+├── iterations/
+├── decisions/
+├── reviews/
+├── checks/
+├── workflows/
+├── tmp/
+└── logs/
 ```
 
-### 复杂需求
+全局数据库：
 
 ```text
-brainstorming
-→ Existing Capability Discovery
-→ /opsx:propose <change-id>
-→ Spec Review
-→ writing-plans
-→ 询问用户选择 executing-plans / subagent-driven-development
-→ 按用户选择执行
-→ test-driven-development 默认必须执行
-→ /review 默认必须执行
-→ 询问是否 requesting-code-review
-→ 询问是否 verification-before-completion
-→ 询问是否 finishing-a-development-branch
-→ 用户确认后 /opsx:archive <change-id>
+~/.codeflow/codeflow.db
 ```
 
-## Git 操作规则
+## Web Dashboard 视觉升级
 
-未经用户明确确认，禁止执行任何会改变 Git 状态的命令，包括但不限于 `git add`、`git commit`、`git push`、`git merge`、`git rebase`、`git reset`、`git clean`、`git restore`、`git checkout`、`git switch`、`git stash`、`git tag`。
+CodeFlow 2.1 Web Dashboard 不是简单 HTML 页面，而是正式的本地开发工作台。
+
+当前发布包包含：
+
+```text
+Go JSON API
+嵌入式 Web Dashboard
+左侧 Sidebar
+顶部搜索
+项目 KPI
+项目卡片
+项目详情
+需求 / 迭代 / OpenSpec / Review / Graphify / 搜索页面
+```
+
+运行方式不变：
+
+```bash
+codeflow web --port 4399
+```
+
+前端源码位于：
+
+```text
+web/
+```
+
+内置静态发布资源位于：
+
+```text
+internal/core/webui/dist/
+```
+
+
+## Collaborative Agents
+
+CodeFlow 2.1 新增 Collaborative Agents 模块：
+
+- Claude Code：Agent Teams readiness / commands / hooks guidance
+- Codex：Subagent Workflows + `.agents/skills`
+- Cursor：Parallel Agents + `.cursor/rules`
+
+新增 CLI：
+
+```bash
+codeflow agents status
+codeflow agents suggest "复杂 Review"
+```
+
+Dashboard 增加 Collaborative Agents 页面，展示三端能力、规则、启用建议和风险提示。
