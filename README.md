@@ -2,151 +2,115 @@
 
 CodeFlow 是一套面向 AI Coding 工具的 OpenSpec + Superpowers 标准开发工作流包。
 
-当前版本：`CodeFlow 1.2 Skill System Workflow Pack`
+支持 Claude Code、Codex、Cursor 三端。
 
-支持：
-
-- Claude Code
-- Codex
-- Cursor
-
-## 设计目标
-
-CodeFlow 不替代 OpenSpec，也不替代 Superpowers。它负责把以下能力组织成稳定可执行的项目级 AI 工作流：
+## 一句话概括
 
 ```text
-需求澄清 → 已有能力发现 → OpenSpec change → 计划拆解 → 执行 → TDD → Review → 验证 → 收尾 → 归档
+CodeFlow = 给项目安装 AI 开发规范、技能和工具适配的轻量规则包。
 ```
+
+## 核心能力
+
+- **标准工作流**：需求澄清 → 已有能力发现 → OpenSpec change → 计划拆解 → 执行 → TDD → Review → 验证 → 收尾 → 归档
+- **10 个 Slash Commands**：`/codeflow-new`、`/codeflow-review`、`/codeflow-finish` 等
+- **6 个专项 Agents**：需求分析、代码审查、OpenSpec 审查、能力发现、计划审查、测试审查
+- **13 个 Skills**：含前端 Vue+TS 工程规范、Go 后端工程规范、TDD、Review、上下文预算、质量门等
+- **Collaborative Agents**：Agent Teams 并行协作（仅 Claude Code）
+- **Hooks 安全门**：阻止未经确认的 Git 写操作、危险命令、敏感文件修改
+- **自动 Skill 路由**：根据技术栈自动加载对应工程 Skill
 
 ## 多工具能力对照
 
-| 能力 | Claude Code | Codex | Cursor |
-|---|---|---|---|
-| 核心规则 | `.claude/rules/` | `AGENTS.md` | `.cursor/rules/*.mdc` |
-| 命令入口 | `.claude/commands/` | 自然语言触发 | Agent Chat 触发 |
-| Agents | `.claude/agents/` | 不安装 | 不安装 |
-| Skills | `.claude/skills/` | `.agents/skills/` | 转为 rules / workflows |
-| Hooks | `.claude/settings.json` | 不支持 | 不支持 |
-| 状态文件 | `.codeflow/` | `.codeflow/` | `.codeflow/` |
-| Graphify | 可选 | 可选 | 可选 |
+| 能力       | Claude Code                  | Codex             | Cursor                |
+|----------|------------------------------|-------------------|-----------------------|
+| 核心规则     | `.claude/rules/`             | `AGENTS.md`       | `.cursor/rules/*.mdc` |
+| 命令入口     | `/codeflow-*` slash commands | 自然语言触发            | Agent Chat 触发         |
+| Agents   | 6 个专项 agent                  | 不安装               | 不安装                   |
+| Skills   | `.claude/skills/`            | `.agents/skills/` | 转为 rules / workflows  |
+| Hooks    | 安全门 + 状态注入                   | 不支持               | 不支持                   |
+| 状态文件     | `.codeflow/`                 | `.codeflow/`      | `.codeflow/`          |
+| Graphify | 可选                           | 可选                | 可选                    |
 
-## 安装方式：手动安装 / AI 代装
+## 快速开始
 
-### 手动安装
+### 1. 安装
 
 ```bash
 git clone https://github.com/yunluoicu/code-flow /tmp/code-flow
 cd /path/to/your-project
+
+# 预览安装（推荐先执行）
+python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude --dry-run
+
+# 安装 Claude Code adapter
 python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude
-```
 
-安装 Codex：
-
-```bash
-python3 /tmp/code-flow/scripts/install_all.py --target . --tools codex
-```
-
-安装 Cursor：
-
-```bash
-python3 /tmp/code-flow/scripts/install_all.py --target . --tools cursor
-```
-
-三端都安装：
-
-```bash
+# 或三端全装
 python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor
 ```
 
-预览安装，不实际写入：
+也可让 AI 代装：在目标项目中发送"请安装 CodeFlow 到当前项目"，指向 `https://github.com/yunluoicu/code-flow` 和
+`install.md`。
+
+### 2. 开启第一个需求
+
+```
+/codeflow-new 用户管理模块增加角色权限控制功能
+```
+
+CodeFlow 会自动判断需求复杂度，走对应的简单/复杂工作流。
+
+### 3. 继续之前的需求
+
+```
+/codeflow-continue
+```
+
+### 4. 审查改动
+
+```
+/codeflow-review
+```
+
+### 5. 收尾归档
+
+```
+/codeflow-finish
+```
+
+## 文档导航
+
+| 文档                             | 内容                                |
+|--------------------------------|-----------------------------------|
+| [README](README.md)            | 项目介绍与快速开始（本文件）                    |
+| [使用指南](docs/usage-guide.md)    | Commands、Agents、Skills、Rules 完整详解 |
+| [FAQ](docs/faq.md)             | 常见问题                              |
+| [建议指南](docs/best-practices.md) | 什么场景用什么工作流、执行方式选择指南               |
+| [安装说明](install.md)             | 详细安装与升级说明                         |
+| [卸载说明](docs/uninstall.md)      | 卸载步骤                              |
+| [适配器说明](docs/adapters.md)      | 三端 adapter 差异与设计                  |
+| [设计方案](CodeFlow_1.x完整设计方案.md)  | 完整架构设计文档                          |
+
+## 环境要求（Agent Teams）
+
+Claude Code 的 Agent Teams 是实验性功能，默认不启用。如需使用 `/codeflow-team-*` 命令：
 
 ```bash
-python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --dry-run
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ```
 
-升级：
-
-```bash
-python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --upgrade
-```
-
-强制覆盖 CodeFlow 管理文件：
-
-```bash
-python3 /tmp/code-flow/scripts/install_all.py --target . --tools claude,codex,cursor --force
-```
-
-### AI 代装
-
-打开目标项目的 Claude Code / Codex / Cursor，然后发送：
+## 设计原则
 
 ```text
-请安装 CodeFlow 到当前项目。
-
-仓库：
-https://github.com/yunluoicu/code-flow
-
-安装说明：
-https://raw.githubusercontent.com/yunluoicu/code-flow/main/install.md
-
-我要安装的工具：
-Claude Code / Codex / Cursor
-
-请先阅读安装说明，然后列出：
-1. 准备执行的步骤
-2. 会创建哪些文件
-3. 会修改哪些文件
-4. 是否会修改 CLAUDE.md / AGENTS.md / .claude/settings.json / .cursor/rules
-5. 是否会执行 git / python / chmod 等命令
-6. 风险点
-
-等我确认后再执行安装。
+1. Skills-first：skills 是核心能力单元
+2. Commands 只是快捷入口
+3. Rules 是硬约束
+4. Hooks 做自动化、安全门和上下文保存
+5. Agents 做专项执行者
+6. Collaborative Agents 用于复杂并行协作
+7. 不自动 Git 写操作
+8. 不自动执行 Graphify
+9. 简单需求不使用多代理
+10. 当前任务只加载相关 skill
 ```
-
-一句话：手动安装是你开车；AI 代装是 AI 开车，你坐副驾踩刹车。
-
-## 使用方式
-
-Claude Code：使用 `/codeflow-new`、`/codeflow-status`、`/codeflow-review` 等命令。
-
-Codex：直接说 `按 CodeFlow 开始新需求：<需求内容>`。
-
-Cursor：在 Agent Chat 里说 `按 CodeFlow 开始新需求：<需求内容>`。
-
-## Graphify 可选增强
-
-CodeFlow 不自动安装 Graphify，也不自动执行 `/graphify .` 或 `/graphify . --update`。
-
-如果没有 `graphify-out/graph.json`，会提醒用户可执行：
-
-```text
-/graphify .
-```
-
-如果图谱可能落后，会提醒用户可执行：
-
-```text
-/graphify . --update
-```
-
-Graphify 只作为项目理解线索，最终必须以真实代码、OpenSpec specs 和测试文件为准。
-
-## Git 安全规则
-
-所有 Git 写操作必须用户确认，包括但不限于：`git add`、`git commit`、`git push`、`git merge`、`git rebase`、`git reset`、`git clean`、`git restore`、`git checkout`、`git switch`、`git stash`、`git tag`。
-
-
-## Collaborative Agents
-
-CodeFlow 1.2 继续包含跨工具 Collaborative Agents 能力：
-
-- Claude Code：Agent Teams
-- Codex：Subagent Workflows
-- Cursor：Parallel Agents / Rules
-
-详见 `docs/collaborative-agents.md`。
-
-
-## Skill System
-
-CodeFlow 1.2 新增 Engineering Skills 与 Skill System：Vue + TypeScript、Go、Context Budget、Quality Gates、Skill Learning、Eval Checkpoints、Auto Skill Routing。详见 `docs/skill-system.md`。
