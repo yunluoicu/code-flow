@@ -1,6 +1,6 @@
 ---
 name: codeflow-backend-go
-description: Use when reading or writing Go files, go.mod, backend APIs, services, repositories, jobs, workers, middleware, database models, tests, or Go project architecture.
+description: Go 后端工程规范：类型清晰、错误可追踪、context 贯穿、接口小而明确、结构化日志、table-driven tests。触发条件：*.go / go.mod / cmd/ / internal/ / api/ / service/ 等。
 ---
 
 # CodeFlow Backend Go Skill

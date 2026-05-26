@@ -1,6 +1,6 @@
 ---
 name: codeflow-context-budget
-description: Use to control context size, active skills, MCP/tools, agents, and long-session handoff.
+description: 上下文预算控制：限制当前任务加载的 skill 数量、MCP 工具、代理数量，避免撑爆 AI 上下文。长任务必须 handoff，compact 前生成摘要。
 ---
 
 # CodeFlow Context Budget Skill

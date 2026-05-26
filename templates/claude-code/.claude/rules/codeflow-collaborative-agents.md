@@ -1,6 +1,8 @@
 
 # CodeFlow Collaborative Agents
 
+CodeFlow 多代理协作统一规范。定义 Claude Code / Codex / Cursor 三端的多代理协作通用规则、四种执行方式及推荐 Prompt 模板。简单需求禁止使用多代理，多代理写代码前必须用户确认。
+
 CodeFlow Collaborative Agents 是 CodeFlow 对多 AI 工具协作代理能力的统一抽象。
 
 它不是单一工具能力，而是三端适配：

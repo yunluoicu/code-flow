@@ -1,6 +1,8 @@
 
 # CodeFlow Agent Teams
 
+Claude Code Agent Teams 专项约束。Agent Teams 仅适用于 Claude Code，默认不启用（需设置 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1），token 成本更高，创建前必须用户确认。
+
 Agent Teams 仅适用于 Claude Code。
 
 ## 默认策略

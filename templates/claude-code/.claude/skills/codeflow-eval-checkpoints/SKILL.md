@@ -1,6 +1,6 @@
 ---
 name: codeflow-eval-checkpoints
-description: Use to define checkpoint-based evals for tasks, reviews, tests, and releases.
+description: 评估检查点：在计划完成、子任务完成、Review 前、发布前等关键节点定义检查点，输出 Command / Result / Risk / Next Step。
 ---
 
 # CodeFlow Eval Checkpoints

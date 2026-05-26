@@ -1,6 +1,6 @@
 ---
 name: codeflow-skill-learning
-description: Use to capture repeated project-specific patterns, mistakes, fixes, and review findings into .codeflow/learnings with user confirmation.
+description: 项目模式沉淀：发现重复问题/模式时提醒用户，经确认后写入 .codeflow/learnings/。不自动写入。每条 learning 包含场景、错误模式、正确做法、示例。
 ---
 
 # CodeFlow Skill Learning

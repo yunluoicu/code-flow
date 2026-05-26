@@ -1,6 +1,14 @@
 # /codeflow-team-investigate
 
-创建 Claude Code Agent Team 进行疑难问题调查。
+创建 Claude Code Agent Team 进行疑难问题调查，使用"竞争假设"方式：每个 teammate 负责验证一个假设并尝试反驳其他假设。
+
+使用方式：
+
+```text
+/codeflow-team-investigate <问题描述>
+```
+
+适用场景：难以复现的 Bug、生产环境诡异问题、需要从多角度排除根因。前置条件：仅 Claude Code 支持；需设置 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1。
 
 要求：
 1. 使用 competing hypotheses。

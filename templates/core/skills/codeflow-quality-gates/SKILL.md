@@ -1,6 +1,6 @@
 ---
 name: codeflow-quality-gates
-description: Use to enforce test, review, security, and verification checkpoints before completion.
+description: 质量门：任务完成前强制检查 TDD/验证、Review、前端状态完整性（loading/empty/error/disabled）、Go 规范（gofmt/test/error/context）、Review 输出格式。
 ---
 
 # CodeFlow Quality Gates Skill

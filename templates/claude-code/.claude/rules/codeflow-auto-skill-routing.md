@@ -1,5 +1,7 @@
 # CodeFlow Auto Skill Routing
 
+自动 Skill 路由规则。根据当前任务涉及的技术栈，自动加载对应的工程 Skill，无需手动触发。
+
 ## Claude Code
 
 当任务涉及 Vue / TypeScript / Vite / Nuxt / Web UI 时，必须优先使用：

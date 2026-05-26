@@ -1,6 +1,6 @@
 ---
 name: codeflow-frontend-vue-ts
-description: Use when reading or writing Vue, TypeScript, Vite, Nuxt, Tailwind, UI components, pages, layouts, dashboards, forms, or frontend interaction code.
+description: Vue+TS 前端工程规范：页面结构清晰、组件边界明确、类型完整、状态管理可控、loading/empty/error 状态齐全。触发条件：*.vue / *.ts / vite.config.ts / components/ / pages/ 等。
 ---
 
 # CodeFlow Frontend Vue + TypeScript Skill
