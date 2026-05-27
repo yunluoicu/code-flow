@@ -1,8 +1,10 @@
+---
+description: 清理 Agent Team：要求所有 teammates 汇报状态，确认无活跃 teammate 后由 Team lead 清理
+---
+
 # /codeflow-team-cleanup
 
 清理 Claude Code Agent Team，要求所有 teammates 汇报最终状态，确认无活跃 teammate 后由 Team lead 执行 cleanup 并输出最终总结。
-
-使用方式：
 
 ```text
 /codeflow-team-cleanup

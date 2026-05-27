@@ -1,8 +1,10 @@
+---
+description: 保存上下文摘要到 state，供下次会话或另一 agent 快速恢复
+---
+
 # /codeflow-handoff
 
 生成紧凑的上下文摘要保存到 state，供下一次会话或另一个 agent 快速恢复。
-
-使用方式：
 
 ```text
 /codeflow-handoff

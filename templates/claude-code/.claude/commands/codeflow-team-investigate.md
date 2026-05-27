@@ -1,8 +1,11 @@
+---
+description: Agent Team 疑难调查：竞争假设方式，每个 teammate 验证一个假设并反驳其他假设
+argument-hint: <问题描述>
+---
+
 # /codeflow-team-investigate
 
 创建 Claude Code Agent Team 进行疑难问题调查，使用"竞争假设"方式：每个 teammate 负责验证一个假设并尝试反驳其他假设。
-
-使用方式：
 
 ```text
 /codeflow-team-investigate <问题描述>

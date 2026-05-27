@@ -1,8 +1,11 @@
+---
+description: Agent Team 协作开发复杂功能：拆分 Architecture / Backend / Test / Review 角色并行
+argument-hint: <复杂功能描述>
+---
+
 # /codeflow-team-feature
 
 创建 Claude Code Agent Team 处理复杂功能开发，拆分 Architecture / Backend / Test / Review 角色并行协作。
-
-使用方式：
 
 ```text
 /codeflow-team-feature <复杂功能描述>

@@ -1,8 +1,11 @@
+---
+description: 启动新需求工作流，自动判断简单/复杂流程
+argument-hint: <需求描述>
+---
+
 # /codeflow-new
 
 启动新需求工作流。根据需求复杂度自动走简单流程或复杂流程（含 OpenSpec）。
-
-使用方式：
 
 ```text
 /codeflow-new <需求描述>

@@ -1,8 +1,10 @@
+---
+description: 查看当前需求的整体进度：change-id、当前 phase、已完成步骤、下一步
+---
+
 # /codeflow-status
 
 查看当前需求的整体进度：change-id、requirement-type、当前 phase、已完成步骤、下一步。
-
-使用方式：
 
 ```text
 /codeflow-status

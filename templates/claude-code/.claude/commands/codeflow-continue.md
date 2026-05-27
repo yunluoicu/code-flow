@@ -1,8 +1,10 @@
+---
+description: 继续上次未完成的需求，从 .codeflow/state.md 恢复工作流状态
+---
+
 # /codeflow-continue
 
 继续上次未完成的需求。读取 .codeflow/state.md 恢复工作流状态，从断点步骤接续执行。
-
-使用方式：
 
 ```text
 /codeflow-continue

@@ -1,4 +1,3 @@
-
 ---
 name: codeflow-collaborative-agents
 description: 多代理协作规范：定义四种执行方式（executing-plans / subagent-driven-development / parallel-agent-review / collaborative-agent-development），统一 Claude Code / Codex / Cursor 三端协作规则。简单需求禁用，写代码前必须用户确认。

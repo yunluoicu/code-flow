@@ -1,8 +1,10 @@
+---
+description: 审查当前分支改动，输出 Must Fix / Should Fix / Test Gap / Risk / Evidence
+---
+
 # /codeflow-review
 
 对当前分支的改动执行完整 Code Review。输出 Must Fix / Should Fix / Test Gap / Risk / Evidence 五维度报告。
-
-使用方式：
 
 ```text
 /codeflow-review
